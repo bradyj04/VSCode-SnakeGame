@@ -1,8 +1,14 @@
 //import Vibrant from '/node_modules/node-vibrant/dist/vibrant.js';
 //const colors = await Vibrant.from('./nft.jpg').getPalette();
 var canvas = document.getElementById('img-canvas');
+const yCenter = 1/2 * canvas.height;
 var ctx = canvas.getContext("2d");
-var finalColor = [];
+
+var firstColor = [];
+var secondColor = [];
+var thirdColor = [];
+var fourthColor = [];
+
 var count = 1;
 
 var img = new Image();
@@ -13,20 +19,28 @@ var colorData;
 img.addEventListener("load", makeImage, false);
 
 function makeImage() {
-    ctx.drawImage(img, 0, 0, 200, 100);
-    var imgData = ctx.getImageData(10, 10, 1, 1);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    //left center of image
+    var firstData = ctx.getImageData(1/3*canvas.width, yCenter, 1, 1);
+    //center of image
+    var secondData = ctx.getImageData(1/2*canvas.width, yCenter, 1, 1);
+    //lower center of image
+    var thirdData = ctx.getImageData(1/2*canvas.width, 2/3*canvas.height, 1, 1);
+    //right center of image
+    var fourthData = ctx.getImageData(2/3*canvas.width, yCenter, 1, 1);
+    //set all colors equal to RGBA data values on second run of makeImage function
     if (count > 1) {
-        finalColor[0] = imgData.data[0];
-        finalColor[1] = imgData.data[1];
-        finalColor[2] = imgData.data[2];
-        finalColor[3] = imgData.data[3];
+        firstColor[0] = firstData.data[0];
+        firstColor[1] = firstData.data[1];
+        firstColor[2] = firstData.data[2];
+        firstColor[3] = firstData.data[3];
     }
     count = count + 1;
     
 }
 
 makeImage();
-console.log(finalColor);
+console.log(firstColor);
 
 function rnd(m) {
     let x = Math.random() * m;
@@ -39,7 +53,8 @@ function rnd(m) {
       this.preferences = {
         bgSize: 441,
         bgColor: 'rgb(0,0,0)',
-        snakeColor: 'rgba(' + finalColor[0] + ',' + finalColor[1] + ',' + finalColor[2] + ',' + finalColor[3] + ')',
+        //Set snake block color
+        snakeColor: 'rgba(' + firstColor[0] + ',' + firstColor[1] + ',' + firstColor[2] + ',' + firstColor[3] + ')',
         foodColor: 'rgb(255, 0, 200)',
       };
       this.context.fillStyle = this.preferences.bgColor;
