@@ -1,16 +1,32 @@
 //import Vibrant from '/node_modules/node-vibrant/dist/vibrant.js';
 //const colors = await Vibrant.from('./nft.jpg').getPalette();
-document.getElementById('nftimage').onload = getImageColor();
-function getImageColor() {
-    var canvas = document.getElementById('img-canvas');
-    var ctx = canvas.getContext("2d");
-    var img = document.getElementById('nftimage');
-    ctx.drawImage(img, 0, 0);
-    var imgData = ctx.getImageData(0, 0, 1, 1);
-    console.log(imgData);
-    console.log(imgData.data);
+var canvas = document.getElementById('img-canvas');
+var ctx = canvas.getContext("2d");
+var finalColor = [];
+var count = 1;
+
+var img = new Image();
+img.src= "./nft.jpg";
+
+var colorData;
+
+img.addEventListener("load", makeImage, false);
+
+function makeImage() {
+    ctx.drawImage(img, 0, 0, 200, 100);
+    var imgData = ctx.getImageData(10, 10, 1, 1);
+    if (count > 1) {
+        finalColor[0] = imgData.data[0];
+        finalColor[1] = imgData.data[1];
+        finalColor[2] = imgData.data[2];
+        finalColor[3] = imgData.data[3];
+    }
+    count = count + 1;
+    
 }
-document.getElementById('nftimage').setAttribute('src', 'nft.jpg');
+
+makeImage();
+console.log(finalColor);
 
 function rnd(m) {
     let x = Math.random() * m;
@@ -23,7 +39,7 @@ function rnd(m) {
       this.preferences = {
         bgSize: 441,
         bgColor: 'rgb(0,0,0)',
-        snakeColor: 'rgb(255, 255, 200)',
+        snakeColor: 'rgba(' + finalColor[0] + ',' + finalColor[1] + ',' + finalColor[2] + ',' + finalColor[3] + ')',
         foodColor: 'rgb(255, 0, 200)',
       };
       this.context.fillStyle = this.preferences.bgColor;
