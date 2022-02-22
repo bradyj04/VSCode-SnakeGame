@@ -1,9 +1,9 @@
-//import Vibrant from '/node_modules/node-vibrant/dist/vibrant.js';
-//const colors = await Vibrant.from('./nft.jpg').getPalette();
+//Gets canvas elements for image, not the game
 var canvas = document.getElementById('img-canvas');
 const yCenter = 1/2 * canvas.height;
 var ctx = canvas.getContext("2d");
 
+//Initializes variables for all color data lists
 var firstColor = [];
 var secondColor = [];
 var thirdColor = [];
@@ -11,10 +11,9 @@ var fourthColor = [];
 
 var count = 1;
 
+//creates image that user uploads
 var img = new Image();
 img.src= "./nft.jpg";
-
-var colorData;
 
 img.addEventListener("load", makeImage, false);
 
@@ -30,17 +29,60 @@ function makeImage() {
     var fourthData = ctx.getImageData(2/3*canvas.width, yCenter, 1, 1);
     //set all colors equal to RGBA data values on second run of makeImage function
     if (count > 1) {
+      //First Color
         firstColor[0] = firstData.data[0];
         firstColor[1] = firstData.data[1];
         firstColor[2] = firstData.data[2];
         firstColor[3] = firstData.data[3];
+      //Second Color
+        secondColor[0] = secondData.data[0];
+        secondColor[1] = secondData.data[1];
+        secondColor[2] = secondData.data[2];
+        secondColor[3] = secondData.data[3];
+      //Third Color
+        thirdColor[0] = thirdData.data[0];
+        thirdColor[1] = thirdData.data[1];
+        thirdColor[2] = thirdData.data[2];
+        thirdColor[3] = thirdData.data[3];
+      //Fourth Color
+        fourthColor[0] = fourthData.data[0];
+        fourthColor[1] = fourthData.data[1];
+        fourthColor[2] = fourthData.data[2];
+        fourthColor[3] = fourthData.data[3];
     }
     count = count + 1;
     
 }
 
+//Second call of function, sets all colorData varitions to correct data
 makeImage();
-console.log(firstColor);
+
+//Randomly picks number 0-3 and sets color to number picked
+//Called when snake eats food and spawns in
+function snakeColor() {
+  var randomNumber = Math.floor(Math.random() * 4);
+  console.log(randomNumber);
+  var color;
+  //If 0, set color to first color RGBA
+  if (randomNumber == 0) {
+    color = 'rgba(' + firstColor[0] + ',' + firstColor[1] + ',' + firstColor[2] + ',' + firstColor[3] + ')';
+  }
+  //If 1, set color to second color RGBA
+  else if (randomNumber == 1) {
+    color = 'rgba(' + secondColor[0] + ',' + secondColor[1] + ',' + secondColor[2] + ',' + secondColor[3] + ')';
+  }
+  //If 2, set color to third color RGBA
+  else if (randomNumber == 2) {
+    color = 'rgba(' + thirdColor[0] + ',' + thirdColor[1] + ',' + thirdColor[2] + ',' + thirdColor[3] + ')';
+  }
+  //If 3, set color to fourth color RGBA
+  else if (randomNumber == 3) {
+    color = 'rgba(' + fourthColor[0] + ',' + fourthColor[1] + ',' + fourthColor[2] + ',' + fourthColor[3] + ')';
+  }
+  //Returns color randomly picked for snake
+  console.log(color);
+  return color;
+}
 
 function rnd(m) {
     let x = Math.random() * m;
@@ -52,9 +94,9 @@ function rnd(m) {
       this.context = canvas.getContext('2d');
       this.preferences = {
         bgSize: 441,
-        bgColor: 'rgb(0,0,0)',
+        bgColor: 'rgb(255,255,255)',
         //Set snake block color
-        snakeColor: 'rgba(' + firstColor[0] + ',' + firstColor[1] + ',' + firstColor[2] + ',' + firstColor[3] + ')',
+        snakeColor: snakeColor(),
         foodColor: 'rgb(255, 0, 200)',
       };
       this.context.fillStyle = this.preferences.bgColor;
@@ -77,7 +119,7 @@ function rnd(m) {
 
     drawSnake(snake) {
       snake.forEach(({ x, y }) =>
-        this.drawSquare(x, y, this.preferences.snakeColor)
+        this.drawSquare(x, y, snakeColor())
       );
     }
 
@@ -92,9 +134,9 @@ function rnd(m) {
     }
 
     drawPauseScreen() {
-      this.context.fillStyle = 'rgb(0,0,0)';
-      this.context.fillRect(0, 0, 441, 441);
       this.context.fillStyle = 'rgb(255,255,255)';
+      this.context.fillRect(0, 0, 441, 441);
+      this.context.fillStyle = 'rgb(0,0,0)';
       this.context.font = 'bold 20px sans-serif';
       this.context.fillText('Pause. Press spacebar', 110, 220);
     }
