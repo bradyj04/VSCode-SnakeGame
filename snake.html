@@ -1,24 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Snake Canvas</title>
-    <script type="script" src="./index.js"></script>
-    <canvas id="img-canvas" style="width: 100px; height: 100px; display: none;">not supported</canvas>
+    <title>Snake</title>
+    <script type="text/javascript" src="./index.js"></script>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
       body {
         text-align: center;
         font-family: 'Courier';
-        background-color: black;
-        color: white;
+        background-color: white;
+        color: black;
       }
 
-      canvas {
-        border: solid white;
+      #game {
+        border: solid black;
       }
     </style>
   </head>
+  <form id="nft-input">
+    <input type="text" id="nft_url" placeholder="NFT Image URL">
+    <input onclick="runGame()" type="button" value="Submit" id="input-button">
+    <!--TEST URL FOR INPUT: https://hkgwtdvfyh.medianetwork.cloud/unsafe/30x30/filters:format(webp)/www.arweave.net/BA4rAIN16HVT99YcxS3G27CDL66DqwlM6y3HZbMJ1iI/image.png-->
+</form>
+<div id="img-div">
+  <h2 id="img-text">Your Image:</h2>
+  <canvas id="img-canvas">not supported</canvas>
+</div>
+
+
   <body>
-    <h1>Snake Canvas</h1>
+    <h1>Snake</h1>
     <canvas id="game" width="441" height="441"></canvas>
     <h3 id="score">Score: 0</h3>
   </body>
