@@ -10,6 +10,7 @@ function runGame() {
   var secondColor = [];
   var thirdColor = [];
   var fourthColor = [];
+  var randColorCount = 0;
 
   var count = 1;
 
@@ -67,25 +68,35 @@ function runGame() {
     var randomNumber = Math.floor(Math.random() * 4);
     console.log(randomNumber);
     var color;
-    //If 0, set color to first color RGBA
-    if (randomNumber == 0) {
-      color = 'rgba(' + firstColor[0] + ',' + firstColor[1] + ',' + firstColor[2] + ',' + firstColor[3] + ')';
+    //Creates "delay" between snake color change, keeps previous color for two frames instead of one
+    if (randColorCount == 0) {
+      //If 0, set color to first color RGBA
+      if (randomNumber == 0) {
+        color = 'rgba(' + firstColor[0] + ',' + firstColor[1] + ',' + firstColor[2] + ',' + firstColor[3] + ')';
+      }
+      //If 1, set color to second color RGBA
+      else if (randomNumber == 1) {
+        color = 'rgba(' + secondColor[0] + ',' + secondColor[1] + ',' + secondColor[2] + ',' + secondColor[3] + ')';
+      }
+      //If 2, set color to third color RGBA
+      else if (randomNumber == 2) {
+        color = 'rgba(' + thirdColor[0] + ',' + thirdColor[1] + ',' + thirdColor[2] + ',' + thirdColor[3] + ')';
+      }
+      //If 3, set color to fourth color RGBA
+      else if (randomNumber == 3) {
+        color = 'rgba(' + fourthColor[0] + ',' + fourthColor[1] + ',' + fourthColor[2] + ',' + fourthColor[3] + ')';
+      }
+      //Adds 1 to randColorCount to delay color change
+      randColorCount = 1;
+      console.log(color);
+      //Returns color randomly picked for snake
+      return color;
+    }else{
+      //Changes randColorCount back to 0 to allow color change
+      randColorCount = 0;
+      //If 0, set color to previous color RGBA
+      return color;
     }
-    //If 1, set color to second color RGBA
-    else if (randomNumber == 1) {
-      color = 'rgba(' + secondColor[0] + ',' + secondColor[1] + ',' + secondColor[2] + ',' + secondColor[3] + ')';
-    }
-    //If 2, set color to third color RGBA
-    else if (randomNumber == 2) {
-      color = 'rgba(' + thirdColor[0] + ',' + thirdColor[1] + ',' + thirdColor[2] + ',' + thirdColor[3] + ')';
-    }
-    //If 3, set color to fourth color RGBA
-    else if (randomNumber == 3) {
-      color = 'rgba(' + fourthColor[0] + ',' + fourthColor[1] + ',' + fourthColor[2] + ',' + fourthColor[3] + ')';
-    }
-    //Returns color randomly picked for snake
-    console.log(color);
-    return color;
   }
 
   function rnd(m) {
