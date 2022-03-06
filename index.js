@@ -67,6 +67,7 @@ function runGame() {
   //Called when snake eats food and spawns in
   function snakeColor() {
     var randomNumber = Math.floor(Math.random() * 4);
+    console.log(randomNumber);
     //Creates constant color, randomly chooses one then returns; has to be ran 2 times b/c 1st time is undefined, second time has color data 
     if (randColorCount < 2) {
       //If 0, set color to first color RGBA
