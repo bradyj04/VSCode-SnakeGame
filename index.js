@@ -61,15 +61,14 @@ function runGame() {
 
   //Second call of function, sets all colorData varitions to correct data
   makeImage();
-
+  //Defined outside function to keep it constant
+  var color;
   //Randomly picks number 0-3 and sets color to number picked
   //Called when snake eats food and spawns in
   function snakeColor() {
     var randomNumber = Math.floor(Math.random() * 4);
-    console.log(randomNumber);
-    var color;
-    //Creates "delay" between snake color change, keeps previous color for two frames instead of one
-    if (randColorCount == 0) {
+    //Creates constant color, randomly chooses one then returns; has to be ran 2 times b/c 1st time is undefined, second time has color data 
+    if (randColorCount < 2) {
       //If 0, set color to first color RGBA
       if (randomNumber == 0) {
         color = 'rgba(' + firstColor[0] + ',' + firstColor[1] + ',' + firstColor[2] + ',' + firstColor[3] + ')';
@@ -86,18 +85,15 @@ function runGame() {
       else if (randomNumber == 3) {
         color = 'rgba(' + fourthColor[0] + ',' + fourthColor[1] + ',' + fourthColor[2] + ',' + fourthColor[3] + ')';
       }
-      //Adds 1 to randColorCount to delay color change
-      randColorCount = 1;
-      console.log(color);
+      //Adds 1 to randColorCount to prevent color change
+      randColorCount = randColorCount + 1;
       //Returns color randomly picked for snake
       return color;
-    }else{
-      //Changes randColorCount back to 0 to allow color change
-      randColorCount = 0;
-      //If 0, set color to previous color RGBA
-      return color;
     }
+    console.log("ran snakeColor");
+    return color;
   }
+  
 
   function rnd(m) {
       let x = Math.random() * m;
@@ -235,7 +231,8 @@ function runGame() {
         document.getElementById('score').innerHTML = 'Score: ' + game.score;
       };
       //starts game
-      game.intervalId = setInterval(game.run, 1000 / 9);
+      //game speed is determined by the value of the vaue in setInterval; higher value = slower speed
+      game.intervalId = setInterval(game.run, 150);
       document.onkeydown = function (e) {
         let code = e.keyCode - 37;
         if (code === -5) {
